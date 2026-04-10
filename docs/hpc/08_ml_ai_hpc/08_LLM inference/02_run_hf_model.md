@@ -1,11 +1,11 @@
-# Run a Hugging Face model
+# Basic LLM Inference with Hugging Face transformers
 
 Here we provide an example of how one can run a Hugging Face Large-language model (LLM) on the NYU Torch cluster
 
 ## Prepare environment
 ### Create project directory
 
-After [logging on to a Torch login node](../02_connecting_to_hpc/01_connecting_to_hpc.mdx), make a directory for this project:
+After [logging on to a Torch login node](../../02_connecting_to_hpc/01_connecting_to_hpc.mdx), make a directory for this project:
 ```bash
 [NetID@log-1 ~]$ mkdir -p /scratch/NetID/llm_example
 [NetID@log-1 ~]$ cd /scratch/NetID/llm_example
@@ -22,13 +22,13 @@ Some of the following steps can require significant resources, so we'll move to 
 
 ### Copy appropriate overlay file to the project directory
 ```bash
-[NetID@cm001 llm_example]$ cp -rp /scratch/work/public/overlay-fs-ext3/overlay-50G-10M.ext3.gz .
+[NetID@cm001 llm_example]$ cp -rp /share/apps/overlay-fs-ext3/overlay-50G-10M.ext3.gz .
 [NetID@cm001 llm_example]$ gunzip overlay-50G-10M.ext3.gz
 ```
 
 ### Launch Singularity container in read/write mode
 ```bash
-[NetID@cm001 llm_example]$ singularity exec --overlay overlay-50G-10M.ext3:rw /scratch/work/public/singularity/cuda12.1.1-cudnn8.9.0-devel-ubuntu22.04.2.sif /bin/bash
+[NetID@cm001 llm_example]$ apptainer exec --fakeroot --overlay overlay-50G-10M.ext3:rw /share/apps/images/cuda12.1.1-cudnn8.9.0-devel-ubuntu22.04.2.sif /bin/bash
 ```
 
 ### Install miniconda in the container

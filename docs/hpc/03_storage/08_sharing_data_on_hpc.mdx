@@ -1,6 +1,6 @@
 # Sharing Data on HPC
 
-## Introduction
+## Access Control Lists (ACL)
 To share files on the cluster with other users, we recommend using NFSv4 Access Control Lists (ACL) for a user to share access to their data with others. NFSv4 ACL mechanism allows for fine-grained control access to any files by any users or groups of users.
 :::warning
 We discourage users from setting `777` permissions with `chmod`, because this can lead to data loss (by a malicious user or unintentionally, by accident).
@@ -59,3 +59,85 @@ A:g:GROUP@:rtncy
 A::EVERYONE@:rtncy
 ```
 where `collaborator-netid` refers to the `NetID` of your collaborator.
+
+#### New NFS4 FACL Example
+This example will grant a user, kevin, access to a shared directory in susie's /scratch directory. 
+
+To share a specific directory and all subdirectories a user would run something like this:
+
+```sh
+nfs4_setfacl -a "A::kevin:RX" /scratch/susie
+```
+
+The above grants kevin basic read/execute to /scratch susie, which is required to see directories and files below `/scratch/susie`.
+
+```sh
+nfs4_setfacl -R -a "A:df:kevin:RWX" /scratch/susie/share
+```
+
+The above would allow kevin to have have read, write, and execute access for *all directories* and files inside `/scratch/susie/share`
+
+
+## Linux Groups for Group Permissions
+The HPC team allows teams to manage group membership using a IPA Linux Group. This is a good choice for when all users need the same read/write/execute permissions for a directory and subdirectories.
+
+Please email [hpc@nyu.edu](mailto:hpc@nyu.edu) if your team would like to use a Linux Group. Generally this will follow some kind of naming convention along the lines of:
+
+g-DEPT-LABNAME
+
+Once you have a group assigned, managers of the group can use the `ipa` commands to manage members via the login nodes.
+
+Relevant user commands include:
+- `ipa group-add-member`: Add members to a group.
+  - Example:
+`ipa group-add-member GROUP-NAME --users='NETID'`
+- `ipa group-add-member-manager`: Add users that can manage members of this group.
+  - Example:
+`ipa group-add-member-manager GROUP-NAME --users='NETID'`
+- `ipa group-find`: Search for groups.
+  - Example:
+```
+ipa group-find test
+----------------
+2 groups matched
+----------------
+  Group name: g-test-2222
+  GID: 891200121
+
+  Group name: g-test-2223
+  Description: g-test-2223
+  GID: 891200122
+----------------------------
+Number of entries returned 2
+----------------------------
+```
+- `ipa group-remove-member`: Remove members from a group.
+  - Example:
+`ipa group-remove-member --users=NETID`
+- `ipa group-remove-member-manager`: Remove users that can manage members of this group.
+  - Example:
+`ipa group-remove-member-manager --users=NETID`
+- `ipa group-show`: Display information about a named group.
+  - Example:
+`ipa group-show GROUP-NAME`
+  - Example:
+```
+[mdw303@torch-login-1 ~]$ ipa group-show g-hpc-mdw303test
+  Group name: g-hpc-mdw303test
+  Description: test RPS group directory
+  GID: 891200193
+  Member users: mdw303, sw77
+  Membership managed by users: mdw303
+```
+
+## Globus File Sharing
+
+You can also share file using Globus.  One advantage of using Globus to share files is that you can share with people who do not have HPC accounts.
+
+See instructions in the [Globus documentation](https://docs.globus.org/guides/tutorials/manage-files/share-files/).
+
+:::note
+Please be aware that it is possible when you select to create a collection that you will see an error message stating that you failed to authenticate.  Please just select the 'Continue' button and you should be taken through the reauthentication process before proceeding to create the collection.
+
+Let us know if you have any questions or problems at [hpc@nyu.edu](mailto:hpc@nyu.edu).
+:::

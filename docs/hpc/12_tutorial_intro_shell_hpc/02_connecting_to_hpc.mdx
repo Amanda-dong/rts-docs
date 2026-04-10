@@ -18,7 +18,7 @@ The first step in using a cluster is to establish a connection from your compute
 
 If you have ever opened the Windows Command Prompt or macOS Terminal, you have seen a CLI.  This is the CLI on your *local machine*. The only leap to be made here is to open a CLI on a *remote machine*, while taking some precautions so that other folks on the network can’t see (or change) the commands you’re running or the results the remote machine sends back. We will use the Secure SHell protocol (or SSH) to open an encrypted network connection between two machines, allowing you to send & receive text and data without having to worry about prying eyes.
 
-![connect-to-remote](./static/connect-to-remote.svg)
+![connect-to-remote](./static/connect-to-remote.png)
 
 SSH clients are usually command-line tools, where you provide the remote machine address as the only required argument. If your username on the remote system differs from what you use locally, you must provide that as well. If your SSH client has a graphical front-end, such as PuTTY or MobaXterm, you will set these arguments before clicking “connect.” From the terminal, you’ll write something like ssh userName@hostname, where the argument is just like an email address: the “@” symbol is used to separate the personal ID from the address of the remote machine.
 
@@ -115,7 +115,7 @@ Features Include:
 
 OOD is accessible to all users with a valid NYU HPC account while on-campus network or through a VPN.
 
-To access OOD visit: [https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu) (VPN Required)
+To access OOD visit: [https://ood.torch.hpc.nyu.edu](https://ood.torch.hpc.nyu.edu) (VPN Required)
 
 ### Access the Shell
 Under the clusters menu you can select the Torch Shell Access option to access the Linux shell. No local SSH client is required.
@@ -124,15 +124,15 @@ Under the clusters menu you can select the Torch Shell Access option to access t
 GUI based applications are accessible without the need for port or X11 forwarding. Select the Interactive Apps menu, select the desired application, and submit the job based on required resources and options.
 
 ### Troubleshooting Connections to Open OnDemand
-A common issue that can occur is receiving an error that the Open OnDemand page cannot be reached. Sometimes this can indicate that the service is down, but often this is an issue with the the local browser cache. You can test this by opening a private browser window and seeing if [https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu) will load. If it does, try deleting the cache for [https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu) in your browser history to resolve this issue.
+A common issue that can occur is receiving an error that the Open OnDemand page cannot be reached. Sometimes this can indicate that the service is down, but often this is an issue with the the local browser cache. You can test this by opening a private browser window and seeing if [https://ood.torch.hpc.nyu.edu](https://ood.torch.hpc.nyu.edu) will load. If it does, try deleting the cache for [https://ood.torch.hpc.nyu.edu](https://ood.torch.hpc.nyu.edu) in your browser history to resolve this issue.
 
 In Chrome, this can be done by navigating to this page in your settings:
 
-[chrome://settings/content/all?searchSubpage=ood.hpc.nyu.edu&search=site+data](chrome://settings/content/all?searchSubpage=ood.hpc.nyu.edu&search=site+data)
+[chrome://settings/content/all?searchSubpage=ood.torch.hpc.nyu.edu&search=site+data](chrome://settings/content/all?searchSubpage=ood.torch.hpc.nyu.edu&search=site+data)
 
 The link above will automatically search for the Open OnDemand site data and cookies. You can then simply click on the trashcan icon to delete the site cache.
 
-Once done, try navigating again to [https://ood.torch.hpc.nyu.edu](https://ood.hpc.nyu.edu) and the site should load. For other issues please email [hpc@nyu.edu](mailto:hpc@nyu.edu).
+Once done, try navigating again to [https://ood.torch.hpc.nyu.edu](https://ood.torch.hpc.nyu.edu) and the site should load. For other issues please email [hpc@nyu.edu](mailto:hpc@nyu.edu).
 
 #### SSH Agents on Linux, macOS, and Windows
 Open your terminal application and check if an agent is running:
@@ -202,25 +202,16 @@ Once you are on the NYU WiFi or VPN you can connect with:
 ssh <NetID>@login.torch.hpc.nyu.edu
 ```
 
-When you are logged in you will see information about your last login, the host you've connected to, and your storage quota.  It should look something like this:
+When you are logged in you will see information about your last login. It should look something like this:
 
 ```bash
-Last login: Fri May  9 09:45:18 2025 from 0.0.0.0
-
-Hostname: log-1 at Mon May 12 10:48:19 EDT 2025
-
-Filesystem   Environment   Backed up?   Allocation       Current Usage
-Space        Variable      /Flushed?    Space / Files    Space(%) / Files(%)
-
-/home        $HOME         Yes/No       50.0GB/30.0K      23.74GB(47.48%)/4913(16.38%)
-/scratch     $SCRATCH      No/Yes        5.0TB/1.0M      35.91GB(0.70%)/19585(1.96%)
-/archive     $ARCHIVE      Yes/No        2.0TB/20.0K       0.00GB(0.00%)/1(0.00%)
-/vast        $VAST         NO/YES        2TB/5.0M           0.0TB(0.0%)/2(0%)
-
-[NetID@log-1 ~]$
+> ssh login.torch.hpc.nyu.edu
+(NetID@login.torch.hpc.nyu.edu) Authenticate with PIN ... at https://login.microsoft.com/device and press ENTER.
+Last login: Tue Mar 17 17:16:15 2026 from 10.27.3.62
+[NetID@torch-login-4 ~]$ 
 ```
 
-By looking at the information after *Hostname:* and in the prompt you'll notice that the machine you're currently logged into is not Torch.  This is expected.  You've just logged into a _login node_ that is connected to Torch.  It is from the login nodes that you will submit jobs to Torch.
+By looking at the information after *Hostname:* and in the prompt you'll notice that the machine you're currently logged into is not Torch. This is expected.  You've just logged into a _login node_ that is connected to Torch.  It is from the login nodes that you will submit jobs to Torch.
 
 If you logged in using PuTTY this will not apply because it does not offer a local terminal.
 

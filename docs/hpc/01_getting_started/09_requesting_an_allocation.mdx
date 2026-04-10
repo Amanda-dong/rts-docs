@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # Managing allocations for your project
 
 :::info[VPN Needed]
-You need to be connected to the NYU VPN to access the HPC project management portal.
+You need to be connected to [NYU VPN](https://www.nyu.edu/life/information-technology/infrastructure/network-services/vpn.html) to access the HPC project management portal.
 :::
 
 Login to HPC projects portal at [projects.hpc.nyu.edu](https://projects.hpc.nyu.edu) on the NYU VPN. Navigate to the "Project" item in the navigation bar on the top of the page and select "Projects" from the drop down menu.<br/>
@@ -52,7 +52,7 @@ Now your allocation request is created! You'll see an allocation request with "N
 
 Once your school approver approves the request, the status will change to "Active" (and you will receive an email notifying you of the change). An active allocation now allows you to submit jobs on Torch.
 
-## `SLURM` account association
+## `SLURM` Account Association
 Within the "Allocations" section in the project, you'll see the `slurm_account_name` listed as shown below:
 !["SLURM account association"](./static/allocation_slurm_account_name.png)
 This account name needs to be specified via the `--account` flag to `srun` and `sbatch`.  

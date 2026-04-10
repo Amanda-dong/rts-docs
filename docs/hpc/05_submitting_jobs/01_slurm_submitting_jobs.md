@@ -5,7 +5,7 @@ If you are new to using HPC resources and would like to learn about the principl
 :::
 
 :::warning Active allocation in the HPC projects portal
-An active allocation in the HPC projects portal is needed to submit any jobs on Torch. For more information on how to get one, please refer to [this section](../01_getting_started/07_hpc_project_management_portal.mdx). All job submissions must include the `--account` parameter.
+An active allocation in the HPC projects portal is needed to submit any jobs on Torch. For more information on how to get one, please refer to [this section](../01_getting_started/07_hpc_project_management_portal.mdx). All job submissions must include the `--account` parameter. On Torch, you can list the SLURM accounts you have access to by running the command `my_slurm_accounts`.
 ::: 
 
 ## Partitions
@@ -21,6 +21,12 @@ Jobs within the same partition cannot exceed their assigned resources (`QOSGrpGR
 
 Non-stakeholders to temporarily use stakeholder resources (a stakeholder group to temporarily use another group’s resources). Stakeholders retain normal access to their own resources. If non-stakeholders (or other stakeholders) are using them, their jobs may be preempted (canceled) once stakeholders submit new jobs. Public users are allowed to use stakeholder resources only with preemption partitions. Refer to the section below for details on preemptible jobs.
 
+:::tip
+
+`QOSGrpGRES` indicates that there are currently no GPUs available in the partition; it does not reflect an issue with your individual account. In contrast, messages such as `QOSMaxMemoryPerUser` and `QOSMaxCpuPerUserLimit` indicate limits imposed on a user’s account.
+
+:::
+
 ## Job Submission on Torch
 As stated in the tuturial, always only request the compute resources (e.g., GPUs, CPUs, memory) needed for the job. Requesting too many resources can prevent your job from being scheduled within an adequate time. The `SLURM` scheduler will automatically dispatch jobs to all accessible GPU partitions that match resource requests.
 
@@ -32,7 +38,7 @@ Jobs with low GPU utilization will be automatically canceled. The exact threshol
 On Torch, users may run "preemptible" jobs on stakeholder resources that their group does not own. This allows the stakeholder resources to be utilized by non-stakeholders which may otherwise be idle. To make the best use of these resources, you are encouraged to adopt checkpoint/restart to allow for resumption of the workload in subsequent jobs.
 
 :::warning Preemption Policy
-Jobs become eligible for preemption after 1 hour of runtime. Jobs will not be canceled within the first hour.
+Jobs become eligible for preemption after 30 minutes of runtime. Jobs will not be canceled within the first 30 minutes.
 :::
 
 The preemption order is:
